@@ -100,7 +100,7 @@
     pokemons.value = []
     loading.value = true
 
-    const start = (pageNum - 1) * PER_PAGE + 1
+    let start = (pageNum - 1) * PER_PAGE + 1
     const end = Math.min(start + PER_PAGE - 1, POKEMON_NUM)
 
     const temp = []
@@ -118,7 +118,7 @@
       } catch (e) {
         temp.push({
           id: i,
-          sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png', 
+          sprite: PokeAPI.getFailedSprite(), 
           name: 'Unavailable',
           types: ['unknown'],
           error: true,
