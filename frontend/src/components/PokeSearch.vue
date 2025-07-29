@@ -1,8 +1,12 @@
 <template>
     <v-autocomplete
-    :items="items"
-    label="Select Pokémon"
+      :items="items"
+      label="Select Pokemon"
+      no-data-text="No Pokemon found."
     />
+    <v-alert v-if="error" type="error" variant="tonal" class="mt-2">
+      {{ error }}
+    </v-alert>
 </template>
 
 <script setup>
@@ -10,6 +14,7 @@
     import PokeAPI from '../services/PokeAPI.js'
 
     const items = ref([])
+    const error = ref(null)
 
     async function loadItems() {
         try {
@@ -17,9 +22,9 @@
             items.value = response.data.pokemon_species.map(p => 
                 p.name.charAt(0).toUpperCase() + p.name.slice(1)
             )
-            console.log(response.data.pokemon_species)
-            console.log(items.value)
-        } catch {}
+        } catch (err) {
+            error.value = 'Failed to load Pokemon.'
+        }
     }
 
     onMounted(() => loadItems())
