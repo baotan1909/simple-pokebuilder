@@ -1,16 +1,18 @@
 <template>
     <v-autocomplete
-      :items="items"
-      label="Select Pokemon"
-      no-data-text="No Pokemon found."
+    :items="items"
+    item-title="name"
+    item-value="id"
+    label="Select Pokemon"
+    @update:modelValue="$emit('select', $event)"
     />
-  </template>
-  
+</template>
+
 <script setup>
-    defineProps({
-        items: {
-            type: Array,
-            required: true
-        }
-    })
-</script>  
+  const props = defineProps({
+    items: {
+      type: Array,
+      required: true
+    }
+  })  
+</script>
