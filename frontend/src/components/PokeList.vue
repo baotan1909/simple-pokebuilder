@@ -118,7 +118,7 @@
       } catch (e) {
         temp.push({
           id: i,
-          sprite: PokeAPI.getFailedSprite(), 
+          sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png', 
           name: 'Unavailable',
           types: ['unknown'],
           error: true,
