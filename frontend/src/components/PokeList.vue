@@ -109,10 +109,10 @@
       try {
         const res = await PokeAPI.getPokemon(i)
         temp.push({
-          id: i,
+          id: res.data.id,
           sprite: res.data.sprites.other['official-artwork'].front_default,
           name: res.data.name,
-          types: res.data.types.map(t => t.type.name),
+          types: (res.data.past_types?.[0]?.types || res.data.types).map(t => t.type.name),
           error: false,
         })
       } catch (e) {
