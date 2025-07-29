@@ -78,7 +78,7 @@
   import Paginate from 'vuejs-paginate-next'
   import PokeAPI from '../services/PokeAPI.js'
   
-  const POKEMON_NUM = 1025
+  const POKEMON_NUM = 151
   const PER_PAGE = 20
   const headers = ['Index', 'Sprite', 'Name', 'Type']
   const pokemons = ref([])
@@ -110,7 +110,7 @@
         const res = await PokeAPI.getPokemon(i)
         temp.push({
           id: i,
-          sprite: PokeAPI.getPokemonSprite(i),
+          sprite: res.data.sprites.other['official-artwork'].front_default,
           name: res.data.name,
           types: res.data.types.map(t => t.type.name),
           error: false,
@@ -158,7 +158,6 @@
 
   tbody tr:hover {
     background-color: #f1f8ff;
-    transform: scale(1.01);
     cursor: pointer;
   }
 

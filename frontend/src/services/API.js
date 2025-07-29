@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-export default(url='https://pokeapi.co/api/v2/') => {
-    return axios.create({
-        baseURL: url
-    })
+const baseURL = import.meta.env.VITE_API_BASE_URL
+
+export default (url = baseURL) => {
+  return axios.create({
+    baseURL: url
+  })
 }
