@@ -1,13 +1,19 @@
 <template>
-    <h1>Hi there.</h1>
+  <h1>Teambuilder</h1>
+  <v-row>
+    <v-col
+      v-for="i in 6"
+      :key="i"
+    >
+      <PokeSearch />
+    </v-col>
+  </v-row>
 </template>
   
-  <script>
-    export default{
-      name: 'TeamBuilderView'
-    }
-  </script>
-  
-  <style scoped>
-  </style>
-  
+<script>
+  import PokeSearch from '../components/PokeSearch.vue';
+  export default{
+    name: 'TeamBuilderView',
+    components: {PokeSearch}
+  }
+</script>
