@@ -2,14 +2,10 @@
     <PokeList/>
 </template>
   
-  <script>
+<script>
     import PokeList from '../components/PokeList.vue';
     export default{
       name: 'DexView',
       components: {PokeList}
     }
 </script>
-  
-  <style scoped>
-  </style>
-  
