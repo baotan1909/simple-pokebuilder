@@ -11,7 +11,7 @@
   </v-row>
 
   <v-row class="mb-4" align="center" justify="center">
-    <v-col cols="11">
+    <v-col cols="8" md="10">
       <v-text-field
         v-model="newName"
         label="Team Name"
@@ -20,8 +20,8 @@
         hide-details
       />
     </v-col>
-    <v-col cols="1">
-      <AddButton />
+    <v-col cols="4" md="2">
+      <SaveButton />
     </v-col>
   </v-row>
   
@@ -44,6 +44,7 @@
       </v-card>
     </v-col>
   </v-row>
+  <TeamStorage/>
 </template>
   
 <script setup>
@@ -51,7 +52,8 @@
   import PokeAPI from '../services/PokeAPI.js'
   import PokeSearch from '../components/PokeSearch.vue'
   import PokeDisplay from '../components/PokeDisplay.vue'
-  import AddButton from '../components/AddButton.vue'
+  import SaveButton from '../components/SaveButton.vue'
+  import TeamStorage from '../components/TeamStorage.vue'
   
   const newName = ref('')
   const items = ref([])
