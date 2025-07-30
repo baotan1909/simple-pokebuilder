@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" class="mb-6">
     <v-col cols="12" class="text-center">
-      <h1 class="text-h4 font-weight-bold">Teambuilder</h1>
+      <h1 class="text-h2 font-weight-bold">Teambuilder</h1>
     </v-col>
     <v-col cols="12" v-if="error">
       <v-alert type="error" variant="tonal" class="mx-auto" max-width="400">
@@ -10,6 +10,21 @@
     </v-col>
   </v-row>
 
+  <v-row class="mb-4" align="center" justify="center">
+    <v-col cols="11">
+      <v-text-field
+        v-model="newName"
+        label="Team Name"
+        variant="outlined"
+        density="comfortable"
+        hide-details
+      />
+    </v-col>
+    <v-col cols="1">
+      <AddButton />
+    </v-col>
+  </v-row>
+  
   <v-row dense v-if="!error">
     <v-col
       v-for="i in 6"
@@ -33,10 +48,12 @@
   
 <script setup>
   import { ref, onMounted } from 'vue'
+  import PokeAPI from '../services/PokeAPI.js'
   import PokeSearch from '../components/PokeSearch.vue'
   import PokeDisplay from '../components/PokeDisplay.vue'
-  import PokeAPI from '../services/PokeAPI.js'
-
+  import AddButton from '../components/AddButton.vue'
+  
+  const newName = ref('')
   const items = ref([])
   const selected = ref(Array(6).fill(null))
   const error = ref(null)
