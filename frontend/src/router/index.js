@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TeamBuilderView from '../views/TeamBuilderView.vue'
 import DexView from '../views/DexView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/dex',
         name: 'dex',
         component: DexView
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: LoginView
     }
 ]
 
