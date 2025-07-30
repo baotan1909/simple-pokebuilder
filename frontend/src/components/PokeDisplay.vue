@@ -1,12 +1,6 @@
 <template>
     <div v-if="pokemon && data" class="pokemon-card pa-4 d-flex flex-column align-center justify-start">
-        <v-img
-            :src="data.sprite"
-            alt="Pokemon Sprite"
-            width="140"
-            height="140"
-            class="mb-4"
-        />
+        <v-img :src="data.sprite" alt="Pokemon Sprite" width="140" height="140" class="mb-4"/>
         <div class="d-flex flex-wrap justify-center">
             <TypeBadge :types="data.types"/>
         </div>

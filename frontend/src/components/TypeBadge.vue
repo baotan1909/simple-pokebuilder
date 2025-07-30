@@ -1,10 +1,5 @@
 <template>
-    <span
-    v-for="(type, i) in types"
-    :key="i"
-    class="ma-1 type-badge"
-    :class="type.toLowerCase()"
-    >
+    <span v-for="(type, i) in types" :key="i" class="ma-1 type-badge" :class="type.toLowerCase()">
         {{ type }}
     </span>
 </template>

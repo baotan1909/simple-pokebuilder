@@ -1,18 +1,7 @@
 <template>
-  <v-progress-circular
-    v-if="loading"
-    indeterminate
-    color="primary"
-    size="64"
-    class="d-flex mx-auto my-4"
-  />
+  <v-progress-circular v-if="loading" indeterminate color="primary" size="64" class="d-flex mx-auto my-4"/>
   
-  <v-table
-    v-else
-    class="elevation-2 rounded my-4 bordered-table"
-    density="comfortable"
-    hover
-  >
+  <v-table v-else class="elevation-2 rounded my-4 bordered-table" density="comfortable" hover>
     <thead>
       <tr class="bg-blue-grey-lighten-4">
         <th v-for="h in headers" :key="h" class="text-uppercase font-weight-bold text-center">
@@ -46,19 +35,8 @@
     />
   </div>
   <div class="d-flex justify-center align-center mt-2 gap-4">
-    <v-text-field
-      v-model.number="jumpPage"
-      type="number"
-      label="Jump to"
-      density="compact"
-      style="max-width: 100px"
-      hide-details
-    />
-    <v-btn
-      color="primary"
-      @click="clickCallback(jumpPage)"
-      :disabled="jumpPage < 1 || jumpPage > getPageCount()"
-    >
+    <v-text-field v-model.number="jumpPage" type="number" label="Jump to" density="compact" style="max-width: 100px" hide-details/>
+    <v-btn color="primary" @click="clickCallback(jumpPage)" :disabled="jumpPage < 1 || jumpPage > getPageCount()">
       Go
     </v-btn>
   </div>
