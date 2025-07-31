@@ -23,7 +23,7 @@
     <v-col
       v-for="i in 6" :key="i" cols="12" xs="6" sm="4" md="2">
       <v-card elevation="4" class="pa-3 d-flex flex-column align-center">
-        <PokeSearch :items="items" @select="updateSelection(i, $event)" class="mb-2 w-100"/>
+        <PokeSearch :items="items" v-model="selected[i - 1]" class="mb-2 w-100"/>
         <PokeDisplay :pokemon="selected[i - 1]" />
       </v-card>
     </v-col>
