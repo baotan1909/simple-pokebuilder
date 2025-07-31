@@ -33,7 +33,7 @@
   
 <script setup>
   import { ref, onMounted } from 'vue'
-  import useAuth from '../composables/useAuth.js'
+  import auth from '../composables/auth.js'
   import { useNotify } from '../composables/useNotify.js'
   import PokeAPI from '../services/PokeAPI.js'
   import PokeSearch from '../components/PokeSearch.vue'
@@ -45,7 +45,7 @@
   const items = ref([])
   const selected = ref(Array(6).fill(null))
   const error = ref(null)
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated } = auth
   const { notify } = useNotify()
 
   async function loadItems() {

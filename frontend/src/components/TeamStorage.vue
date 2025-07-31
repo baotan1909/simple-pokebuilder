@@ -16,10 +16,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import useAuth from '../composables/useAuth.js'
+import auth from '../composables/auth.js'
 import PokemonBox from '../components/PokemonBox.vue'
 
-const { isAuthenticated } = useAuth()
+const { isAuthenticated } = auth
 const teams = ref({})
 
 const noTeam = computed(() => Object.keys(teams.value).length === 0)

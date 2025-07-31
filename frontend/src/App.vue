@@ -19,6 +19,6 @@
 </template>
 
 <script setup>
-  import useAuth from './composables/useAuth.js'
-  const { isAuthenticated, handleLogout } = useAuth()
+  import auth from './composables/auth.js'
+  const { isAuthenticated, handleLogout } = auth
 </script>
