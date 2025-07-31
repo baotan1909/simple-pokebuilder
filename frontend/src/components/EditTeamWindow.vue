@@ -24,10 +24,10 @@
                 </v-row>
 
                 <v-row dense v-if="!error">
-                    <v-col v-for="i in 6" :key="i" cols="12" xs="6" sm="4" md="2">
+                    <v-col v-for="(pokemon, i) in selected" :key="i" cols="12" xs="6" sm="4" md="2">
                         <v-card elevation="4" class="pa-3 d-flex flex-column align-center">
-                            <PokeSearch :items="items" v-model="selected[i - 1].dex_number" class="mb-2 w-100" />
-                            <PokeDisplay :pokemon="selected[i - 1].dex_number" />
+                            <PokeSearch :items="items" v-model="pokemon.dex_number" class="mb-2 w-100" />
+                            <PokeDisplay :pokemon="pokemon.dex_number" />
                         </v-card>
                     </v-col>
                 </v-row>
@@ -52,7 +52,7 @@
         team: Object,
         modelValue: Boolean,
     })
-    const emit = defineEmits(['update:modelValue'])
+    const emit = defineEmits(['update:modelValue', 'edited'])
 
     const newName = ref('')
     const selected = ref(Array(6).fill({ dex_number: null }))
@@ -66,7 +66,7 @@
             selected.value = Array(6)
                 .fill()
                 .map((_, i) => {
-                    const p = props.team.pokemons?.[i]
+                    const p = props.team.pokemons?.find((_, index) => index === i) || {}
                     const value = p?.dex_number ?? null
                     return {
                         dex_number: value === 0 ? null : value,
@@ -92,31 +92,33 @@
         }
     }
 
-    const saveTeam = async () => {
+    async function saveTeam() {
         if (!props.team?.id) {
             notify('Missing team ID.')
             return
         }
 
-        if (!newName.value.trim()) {
-            newName.value = 'Untitled'
-        }
-
+        const name = newName.value.trim() || 'Untitled'
         const proceed = confirm(`Are you sure you want to save team ${newName.value}?`)
         if (!proceed) { return }
 
         const payload = {
-            name: newName.value.trim(),
-            pokemons: selected.value.map(p => ({
-                dex_number: p?.dex_number ?? 0,
-                species: p?.species ?? 'Unknown'
-            }))
+            name: name,
+            pokemons: selected.value.map(p => {
+                const dex = p?.dex_number ?? 0
+                const species = items.value.find(item => item.id === dex)
+                return {
+                    dex_number: dex,
+                    species: species?.name ?? 'Unknown'
+                }
+            })
         }
 
         try {
             const response = await PokeAPI.updateTeam(props.team.id, payload)
             if (response.data.success) {
                 notify('Team updated successfully!')
+                emit('edited')
                 close()
             } else {
                 notify('Failed to update team.')

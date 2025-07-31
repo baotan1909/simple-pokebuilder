@@ -27,7 +27,7 @@
 </template>
   
 <script setup>
-  import { onMounted, ref, computed } from 'vue'
+  import { onMounted, ref, computed, onUpdated } from 'vue'
   import PokeAPI from '../services/PokeAPI.js'
   
   const props = defineProps({
@@ -48,9 +48,12 @@
     if (props.team.updated_at) { return `Last updated: ${props.team.updated_at}` }
     return `Created: ${props.team.created_at}`
   })
-  
-  onMounted(async () => {
+
+  async function updateSprites() {
+    if (!props.team?.pokemons || props.team.pokemons.length === 0) { return }
+
     const result = []
+
     for (const p of props.team.pokemons) {
       try {
         const res = await PokeAPI.getPokemon(p.dex_number)
@@ -65,6 +68,11 @@
         })
       }
     }
+
     displayPokemons.value = result
-  })
+  }
+
+  onMounted(() => {updateSprites()})
+
+  onUpdated(() => {updateSprites()})
 </script>  

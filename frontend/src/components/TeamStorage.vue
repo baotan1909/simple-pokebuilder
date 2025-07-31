@@ -22,7 +22,7 @@
         </PokemonBox>
       </v-col>
     </v-row>
-    <EditTeamWindow v-model="showDialog" :team="teamToEdit"/>
+    <EditTeamWindow v-model="showDialog" :team="teamToEdit" @edited="loadTeams" />
   </v-container>
 </template>
 
