@@ -1,0 +1,62 @@
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$frontend = $_ENV['FRONTEND_URL'];
+
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: $frontend");
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true');
+
+require_once __DIR__ . '/../db/connection.php';
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+function getJSON() {
+    return json_decode(file_get_contents('php://input'), true);
+}
+
+switch ($method) {
+    case 'GET':
+        break;
+
+    case 'POST':
+        $data = getJSON();
+        if (!isset($data['user_id'], $data['name'], $data['pokemons']) || !is_array($data['pokemons'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing user_id, name, or pokemons']);
+            break;
+        }
+
+        $stmt = $pdo->prepare("INSERT INTO teams (user_id, name) VALUES (:user_id, :name)");
+        $stmt->execute([
+            ':user_id' => $data['user_id'],
+            ':name' => $data['name']
+        ]);
+        $teamId = $pdo->lastInsertId();
+
+        $stmt = $pdo->prepare("INSERT INTO pokemons (team_id, species, dex_number) VALUES (?, ?, ?)");
+        foreach ($data['pokemons'] as $pokemon) {
+            if (!isset($pokemon['species'], $pokemon['dex_number'])) continue;
+            $stmt->execute([$teamId, $pokemon['species'], $pokemon['dex_number']]);
+        }
+
+        echo json_encode(['success' => true, 'id' => $teamId]);
+        break;
+    
+    case 'PUT':
+        break;
+
+    case 'DELETE':
+        break;
+
+    default:
+        http_response_code(405);
+        echo json_encode(['error' => 'Method not allowed']);
+}

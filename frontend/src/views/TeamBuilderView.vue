@@ -15,7 +15,7 @@
       <v-text-field v-model="newName" label="Team Name" variant="outlined" density="comfortable" hide-details/>
     </v-col>
     <v-col cols="4" md="2">
-      <SaveButton />
+      <SaveButton @save="saveTeam" />
     </v-col>
   </v-row>
   
@@ -33,16 +33,20 @@
   
 <script setup>
   import { ref, onMounted } from 'vue'
+  import useAuth from '../composables/useAuth.js'
+  import { useNotify } from '../composables/useNotify.js'
   import PokeAPI from '../services/PokeAPI.js'
   import PokeSearch from '../components/PokeSearch.vue'
   import PokeDisplay from '../components/PokeDisplay.vue'
   import SaveButton from '../components/SaveButton.vue'
   import TeamStorage from '../components/TeamStorage.vue'
-  
-  const newName = ref('')
+
+  const newName = ref('Untitled')
   const items = ref([])
   const selected = ref(Array(6).fill(null))
   const error = ref(null)
+  const { user, isAuthenticated } = useAuth()
+  const { notify } = useNotify()
 
   async function loadItems() {
     try {
@@ -63,5 +67,42 @@
     selected.value[index - 1] = value
   }
 
+  async function saveTeam() {
+    if (!isAuthenticated.value) {
+      notify('You must log in before using this function.')
+      return
+    }
+    const allNull = selected.value.every(p => p === null)
+    if (allNull) {
+      notify('Select at least one Pokémon.')
+      return
+    }
+
+    if (!newName.value.trim()) {
+      newName.value = 'Untitled'
+    }
+
+    console.log(selected.value)
+    const pokemons = selected.value.map(id => ({
+      species: id ? items.value.find(i => i.id === id)?.name || 'Unknown' : 'Unknown',
+      dex_number: id || 0
+    }))
+
+    console.log(pokemons)
+
+    try {
+      await PokeAPI.createTeam({
+        user_id: user.value.id,
+        name: newName.value.trim(),
+        pokemons
+      })
+
+      newName.value = ''
+      selected.value = Array(6).fill(null)
+      notify('Saved team successfully.')
+    } catch (err) {
+      notify('Failed to save team.')
+    }
+  }
   onMounted(() => loadItems())
 </script>
