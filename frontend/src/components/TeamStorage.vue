@@ -11,12 +11,8 @@
     <PokemonBox :team="team">
       <template #actions>
         <div class="d-flex align-center">
-          <v-btn icon variant="text" color="primary" class="mr-2">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn icon variant="text" color="error">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
+          <EditButton/>
+          <DeleteButton :team-id="team.id" @delete="delTeam" />
         </div>
       </template>
 
@@ -35,7 +31,9 @@
   import auth from '../composables/auth.js'
   import PokeAPI from '../services/PokeAPI.js'
   import PokemonBox from '../components/PokemonBox.vue'
-  
+  import EditButton from './EditButton.vue'
+  import DeleteButton from './DeleteButton.vue'
+
   defineExpose({ loadTeams })
 
   const { isAuthenticated, user } = auth
@@ -74,7 +72,16 @@
       console.error('Failed to load teams or likes:', err)
     }
   }
-
+  
+  async function delTeam(team_id) {
+    try {
+      await PokeAPI.deleteTeam(team_id)
+      loadTeams()
+    } catch (err) {
+      console.error('Failed to delete team:', err)
+    }
+  }
+  
   watch([isAuthenticated, user], ([auth, usr]) => {
     if (auth && usr?.id) {
       loadTeams()

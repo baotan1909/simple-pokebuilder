@@ -11,6 +11,9 @@ export default {
   createTeam(payload) {
     return API().post('teams.php', payload)
   },
+  deleteTeam(team_id) {
+    return API().delete(`teams.php?id=${team_id}`)
+  },
 
   // Likes
   getTeamLikes(team_id) {

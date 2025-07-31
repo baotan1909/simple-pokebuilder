@@ -17,6 +17,7 @@ header('Access-Control-Allow-Credentials: true');
 require_once __DIR__ . '/../db/connection.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
+$id = $_GET['id'] ?? null;
 
 function getJSON() {
     return json_decode(file_get_contents('php://input'), true);
@@ -104,6 +105,15 @@ switch ($method) {
         break;
 
     case 'DELETE':
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing team ID']);
+            break;
+        }
+
+        $stmt = $pdo->prepare("DELETE FROM teams WHERE id = ?");
+        $stmt->execute([$id]);
+        echo json_encode(['success' => true]);
         break;
 
     default:
