@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="mb-4">Your Stored Teams</h1>
     <v-alert v-if="!isAuthenticated || noTeam" type="info" variant="tonal" class="mb-4">
-    {{ alertMessage }}
+      {{ alertMessage }}
     </v-alert>
 
     <v-row>
@@ -10,7 +10,7 @@
         <PokemonBox :team="team">
           <template #actions>
             <div class="d-flex align-center">
-              <EditButton/>
+              <EditButton @click="openEditWindow(team)"/>
               <DeleteButton :team-id="team.id" @delete="delTeam" />
             </div>
           </template>
@@ -22,6 +22,7 @@
         </PokemonBox>
       </v-col>
     </v-row>
+    <EditTeamWindow v-model="showDialog" :team="teamToEdit"/>
   </v-container>
 </template>
 
@@ -32,7 +33,8 @@
   import PokemonBox from '../components/PokemonBox.vue'
   import EditButton from './EditButton.vue'
   import DeleteButton from './DeleteButton.vue'
-
+  import EditTeamWindow from './EditTeamWindow.vue'
+  
   defineExpose({ loadTeams })
 
   const { isAuthenticated, user } = auth
@@ -46,6 +48,9 @@
       ? 'You need to log in to create and view your teams.'
       : "You haven't created any teams yet."
   )
+
+  const showDialog = ref(false)
+  const teamToEdit = ref(null)
 
   async function loadTeams() {
     if (!isAuthenticated.value || !user.value?.id) { return }
@@ -80,7 +85,12 @@
       console.error('Failed to delete team:', err)
     }
   }
-  
+
+  function openEditWindow(team) {
+    teamToEdit.value = team
+    showDialog.value = true
+  }
+
   watch([isAuthenticated, user], ([auth, usr]) => {
     if (auth && usr?.id) {
       loadTeams()
