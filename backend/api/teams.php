@@ -102,6 +102,35 @@ switch ($method) {
         break;
     
     case 'PUT':
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing team ID']);
+            break;
+        }
+
+        $data = getJSON();
+        if (!isset($data['name'], $data['pokemons']) || !is_array($data['pokemons'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing name or pokemons']);
+            break;
+        }
+
+        $stmt = $pdo->prepare("UPDATE teams SET name = :name, updated_at = CURRENT_TIMESTAMP WHERE id = :id");
+        $stmt->execute([
+            ':name' => $data['name'],
+            ':id' => $id
+        ]);
+
+        $stmt = $pdo->prepare("DELETE FROM pokemons WHERE team_id = ?");
+        $stmt->execute([$id]);
+
+        $stmt = $pdo->prepare("INSERT INTO pokemons (team_id, species, dex_number) VALUES (?, ?, ?)");
+        foreach ($data['pokemons'] as $pokemon) {
+            if (!isset($pokemon['species'], $pokemon['dex_number'])) continue;
+            $stmt->execute([$id, $pokemon['species'], $pokemon['dex_number']]);
+        }
+
+        echo json_encode(['success' => true]);
         break;
 
     case 'DELETE':

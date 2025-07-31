@@ -42,6 +42,7 @@
   
 <script setup>
     import { ref, onUpdated, onMounted } from 'vue'
+    import { useNotify } from '../composables/useNotify.js'
     import PokeAPI from '../services/PokeAPI'
     import SaveButton from './SaveButton.vue'
     import PokeSearch from './PokeSearch.vue'
@@ -57,17 +58,21 @@
     const selected = ref(Array(6).fill({ dex_number: null }))
     const error = ref(null)
     const items = ref([])
+    const { notify, confirm } = useNotify()
 
     function initFromProps() {
         if (props.modelValue && props.team) {
             newName.value = props.team.name || ''
             selected.value = Array(6)
-            .fill()
-            .map((_, i) => {
-                const p = props.team.pokemons?.[i]
-                const value = p?.dex_number ?? null
-                return { dex_number: value === 0 ? null : value }
-            })
+                .fill()
+                .map((_, i) => {
+                    const p = props.team.pokemons?.[i]
+                    const value = p?.dex_number ?? null
+                    return {
+                        dex_number: value === 0 ? null : value,
+                        species: p?.species ?? 'Unknown'
+                    }
+                })
         }
     }
 
@@ -87,7 +92,40 @@
         }
     }
 
-    const saveTeam = () => {}
+    const saveTeam = async () => {
+        if (!props.team?.id) {
+            notify('Missing team ID.')
+            return
+        }
+
+        if (!newName.value.trim()) {
+            newName.value = 'Untitled'
+        }
+
+        const proceed = confirm(`Are you sure you want to save team ${newName.value}?`)
+        if (!proceed) { return }
+
+        const payload = {
+            name: newName.value.trim(),
+            pokemons: selected.value.map(p => ({
+                dex_number: p?.dex_number ?? 0,
+                species: p?.species ?? 'Unknown'
+            }))
+        }
+
+        try {
+            const response = await PokeAPI.updateTeam(props.team.id, payload)
+            if (response.data.success) {
+                notify('Team updated successfully!')
+                close()
+            } else {
+                notify('Failed to update team.')
+            }
+        } catch (err) {
+            console.error(err)
+            notify('Something went wrong while saving.')
+        }
+    }
 
     const close = () => {
         emit('update:modelValue', false)

@@ -11,6 +11,9 @@ export default {
   createTeam(payload) {
     return API().post('teams.php', payload)
   },
+  updateTeam(team_id, payload) {
+    return API().put(`teams.php?id=${team_id}`, payload)
+  },
   deleteTeam(team_id) {
     return API().delete(`teams.php?id=${team_id}`)
   },
