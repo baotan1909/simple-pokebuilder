@@ -83,13 +83,10 @@
       newName.value = 'Untitled'
     }
 
-    console.log(selected.value)
     const pokemons = selected.value.map(id => ({
       species: id ? items.value.find(i => i.id === id)?.name || 'Unknown' : 'Unknown',
       dex_number: id || 0
     }))
-
-    console.log(pokemons)
 
     try {
       await PokeAPI.createTeam({
