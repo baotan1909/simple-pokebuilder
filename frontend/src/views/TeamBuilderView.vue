@@ -12,13 +12,7 @@
 
   <v-row class="mb-4" align="center" justify="center">
     <v-col cols="8" md="10">
-      <v-text-field
-        v-model="newName"
-        label="Team Name"
-        variant="outlined"
-        density="comfortable"
-        hide-details
-      />
+      <v-text-field v-model="newName" label="Team Name" variant="outlined" density="comfortable" hide-details/>
     </v-col>
     <v-col cols="4" md="2">
       <SaveButton />
@@ -27,19 +21,9 @@
   
   <v-row dense v-if="!error">
     <v-col
-      v-for="i in 6"
-      :key="i"
-      cols="12"
-      xs="6"
-      sm="4"
-      md="2"
-    >
+      v-for="i in 6" :key="i" cols="12" xs="6" sm="4" md="2">
       <v-card elevation="4" class="pa-3 d-flex flex-column align-center">
-        <PokeSearch
-          :items="items"
-          @select="updateSelection(i, $event)"
-          class="mb-2 w-100"
-        />
+        <PokeSearch :items="items" @select="updateSelection(i, $event)" class="mb-2 w-100"/>
         <PokeDisplay :pokemon="selected[i - 1]" />
       </v-card>
     </v-col>
