@@ -8,7 +8,23 @@
 
     <v-row>
   <v-col v-for="team in displayTeams" :key="team.id" cols="12" md="6">
-    <PokemonBox :team="team" />
+    <PokemonBox :team="team">
+      <template #actions>
+        <div class="d-flex align-center">
+          <v-btn icon variant="text" color="primary" class="mr-2">
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+          <v-btn icon variant="text" color="error">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </div>
+      </template>
+
+      <template #info>
+        <v-icon icon="mdi-heart" color="red" start />
+        <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
+      </template>
+    </PokemonBox>
   </v-col>
 </v-row>
   </v-container>

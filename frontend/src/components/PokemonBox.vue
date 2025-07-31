@@ -1,8 +1,9 @@
 <template> 
     <v-card class="pa-4 mb-4 rounded-xl" elevation="3">
-      <v-card-title class="text-h6 font-weight-bold">
-        {{ team.name }}
-      </v-card-title>
+      <v-card-title class="text-h6 font-weight-bold d-flex justify-space-between align-center">
+        <span>{{ team.name }}</span>
+        <slot name="actions" />
+    </v-card-title>
   
       <v-divider class="my-2" />
   
@@ -14,17 +15,19 @@
 
       <v-divider class="my-2" />
   
-      <v-row align="center" class="mt-1">
+      <v-row align="center" class="mt-1 justify-space-between">
         <v-col cols="auto" class="d-flex align-center">
-          <v-icon icon="mdi-heart" color="red" start />
-          <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
+          <slot name="info" />
+        </v-col>
+        <v-col cols="auto" class="text-right text-caption text-grey-darken-1">
+          {{ dateLabel }}
         </v-col>
       </v-row>
     </v-card>
-  </template>
+</template>
   
-  <script setup>
-  import { onMounted, ref } from 'vue'
+<script setup>
+  import { onMounted, ref, computed } from 'vue'
   import PokeAPI from '../services/PokeAPI.js'
   
   const props = defineProps({
@@ -35,23 +38,28 @@
   })
   
   const displayPokemons = ref([])
+
+  const dateLabel = computed(() => {
+    if (props.team.updated_at) { return `Last updated: ${props.team.updated_at}` }
+    return `Created: ${props.team.created_at}`
+  })
   
   onMounted(async () => {
-  const result = []
-  for (const p of props.team.pokemons) {
-    try {
-      const res = await PokeAPI.getPokemon(p.dex_number)
-      result.push({
-        name: p.species,
-        sprite: res.data.sprites.other['official-artwork'].front_default,
-      })
-    } catch (err) {
-      result.push({
-        name: 'Unknown',
-        sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
-      })
+    const result = []
+    for (const p of props.team.pokemons) {
+      try {
+        const res = await PokeAPI.getPokemon(p.dex_number)
+        result.push({
+          name: p.species,
+          sprite: res.data.sprites.other['official-artwork'].front_default,
+        })
+      } catch (err) {
+        result.push({
+          name: 'Unknown',
+          sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
+        })
+      }
     }
-  }
-  displayPokemons.value = result
+    displayPokemons.value = result
   })
 </script>  
