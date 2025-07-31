@@ -64,10 +64,6 @@
     }
   }
 
-  function updateSelection(index, value) {
-    selected.value[index - 1] = value
-  }
-
   async function saveTeam() {
     if (!isAuthenticated.value) {
       notify('You must log in before using this function.')
