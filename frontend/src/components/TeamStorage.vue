@@ -1,28 +1,27 @@
 <template>
   <v-container>
     <h1 class="mb-4">Your Stored Teams</h1>
-
-  <v-alert v-if="!isAuthenticated || noTeam" type="info" variant="tonal" class="mb-4">
-      {{ alertMessage }}
+    <v-alert v-if="!isAuthenticated || noTeam" type="info" variant="tonal" class="mb-4">
+    {{ alertMessage }}
     </v-alert>
 
     <v-row>
-  <v-col v-for="team in displayTeams" :key="team.id" cols="12" md="6">
-    <PokemonBox :team="team">
-      <template #actions>
-        <div class="d-flex align-center">
-          <EditButton/>
-          <DeleteButton :team-id="team.id" @delete="delTeam" />
-        </div>
-      </template>
+      <v-col v-for="team in displayTeams" :key="team.id" cols="12" md="6">
+        <PokemonBox :team="team">
+          <template #actions>
+            <div class="d-flex align-center">
+              <EditButton/>
+              <DeleteButton :team-id="team.id" @delete="delTeam" />
+            </div>
+          </template>
 
-      <template #info>
-        <v-icon icon="mdi-heart" color="red" start />
-        <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
-      </template>
-    </PokemonBox>
-  </v-col>
-</v-row>
+          <template #info>
+            <v-icon icon="mdi-heart" color="red" start />
+            <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
+          </template>
+        </PokemonBox>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
