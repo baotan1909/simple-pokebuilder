@@ -1,7 +1,7 @@
 <template> 
     <v-card class="pa-4 mb-4 rounded-xl" elevation="3">
       <v-card-title class="text-h6 font-weight-bold d-flex justify-space-between align-center">
-        <span>{{ team.name }}</span>
+        <span>{{ teamName }}</span>
         <slot name="actions" />
     </v-card-title>
   
@@ -38,6 +38,11 @@
   })
   
   const displayPokemons = ref([])
+
+  const teamName = computed(() => {
+    if (props.team.name === 'Untitled') { return `${props.team.name}#${props.team.id}`}
+    return props.team.name
+  })
 
   const dateLabel = computed(() => {
     if (props.team.updated_at) { return `Last updated: ${props.team.updated_at}` }
