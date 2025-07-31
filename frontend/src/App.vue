@@ -19,39 +19,6 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
-  import { useRouter } from 'vue-router'
-  import axios from 'axios'
-  import AuthAPI from './services/AuthAPI.js'
-
-  const router = useRouter()
-  const isAuthenticated = ref(false)
-
-  const checkAuth = async () => {
-    try {
-      const res = await AuthAPI.getProfile()
-      isAuthenticated.value = !!res.data.user
-    } catch (err) {
-      isAuthenticated.value = false
-    }
-  }
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-      import.meta.env.VITE_AUTH_BASE_URL + '/logout.php',
-      {},
-      {
-        withCredentials: true
-      }
-    )
-      isAuthenticated.value = false
-      router.push('/')
-    } catch (error) {
-      console.error('Logout failed:', error)
-    }
-  }
-  onMounted(() => {
-    checkAuth()
-  })
+  import useAuth from './composables/useAuth.js'
+  const { isAuthenticated, handleLogout } = useAuth()
 </script>
