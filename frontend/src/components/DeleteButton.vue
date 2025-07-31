@@ -5,15 +5,19 @@
 </template>
 
 <script setup>
-    const props = defineProps({
-        teamId: { type: Number, required: true }
-    })
+import { useNotify } from '../composables/useNotify.js'
 
-    const emit = defineEmits(['delete'])
+const props = defineProps({
+  teamId: { type: Number, required: true }
+})
 
-    function confirmDelete() {
-        if (confirm('Are you sure you want to delete this team?')) {
-            emit('delete', props.teamId)
-        }
-    }
-</script>  
+const emit = defineEmits(['delete'])
+
+const { confirm } = useNotify()
+
+function confirmDelete() {
+  if (confirm('Are you sure you want to delete this team?')) {
+    emit('delete', props.teamId)
+  }
+}
+</script>
