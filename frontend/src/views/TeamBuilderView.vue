@@ -28,7 +28,7 @@
       </v-card>
     </v-col>
   </v-row>
-  <TeamStorage/>
+  <TeamStorage ref="teamStorageRef" />
 </template>
   
 <script setup>
@@ -45,6 +45,7 @@
   const items = ref([])
   const selected = ref(Array(6).fill(null))
   const error = ref(null)
+  const teamStorageRef = ref()
   const { user, isAuthenticated } = auth
   const { notify } = useNotify()
 
@@ -100,6 +101,7 @@
       newName.value = ''
       selected.value = Array(6).fill(null)
       notify('Saved team successfully.')
+      teamStorageRef.value?.loadTeams?.()
     } catch (err) {
       notify('Failed to save team.')
     }

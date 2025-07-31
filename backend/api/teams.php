@@ -24,6 +24,56 @@ function getJSON() {
 
 switch ($method) {
     case 'GET':
+        $userId = $_GET['id'] ?? null;
+
+        if ($userId) {
+            // Fetch all teams by user_id
+            $stmt = $pdo->prepare("SELECT * FROM teams WHERE user_id = ? ORDER BY created_at DESC");
+            $stmt->execute([$userId]);
+            $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            if (!$teams) {
+                echo json_encode(['error' => 'No teams found for this user']);
+                return;
+            }
+
+            // Fetch all Pokemons belong to these teams
+            $teamIds = array_column($teams, 'id');
+            $placeholders = implode(',', array_fill(0, count($teamIds), '?'));
+    
+            $pokeStmt = $pdo->prepare("SELECT * FROM pokemons WHERE team_id IN ($placeholders)");
+            $pokeStmt->execute($teamIds);
+            $allPokemons = $pokeStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $pokemonMap = [];
+            foreach ($allPokemons as $pokemon) {
+                $pokemonMap[$pokemon['team_id']][] = $pokemon;
+            }
+
+            foreach ($teams as &$team) {
+                $team['pokemons'] = $pokemonMap[$team['id']] ?? [];
+            }
+    
+            echo json_encode($teams);
+            return;
+        }
+        // If no user_id is provided, fetch all teams
+        $stmt = $pdo->query("SELECT * FROM teams ORDER BY created_at DESC");
+        $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Fetch all Pokemons and attach them to the coressponding team
+        $pokeStmt = $pdo->query("SELECT * FROM pokemons");
+        $allPokemons = $pokeStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $pokemonMap = [];
+        foreach ($allPokemons as $pokemon) {
+            $pokemonMap[$pokemon['team_id']][] = $pokemon;
+        }
+
+        foreach ($teams as &$team) {
+            $team['pokemons'] = $pokemonMap[$team['id']] ?? [];
+        }
+        echo json_encode($teams);
         break;
 
     case 'POST':

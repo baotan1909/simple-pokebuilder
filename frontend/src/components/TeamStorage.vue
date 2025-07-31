@@ -15,19 +15,55 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import auth from '../composables/auth.js'
-import PokemonBox from '../components/PokemonBox.vue'
+  import { ref, computed, onMounted, watch, defineExpose } from 'vue'
+  import auth from '../composables/auth.js'
+  import PokeAPI from '../services/PokeAPI.js'
+  import PokemonBox from '../components/PokemonBox.vue'
+  
+  defineExpose({ loadTeams })
 
-const { isAuthenticated } = auth
-const teams = ref({})
+  const { isAuthenticated, user } = auth
+  const teams = ref({})
 
-const noTeam = computed(() => Object.keys(teams.value).length === 0)
-const teamList = computed(() => Object.values(teams.value))
-const displayTeams = computed(() => {return isAuthenticated.value && !noTeam.value ? teamList.value : []})
-const alertMessage = computed(() =>
-  !isAuthenticated.value
-    ? 'You need to log in to create and view your teams.'
-    : "You haven't created any teams yet."
-)
+  const noTeam = computed(() => Object.keys(teams.value).length === 0)
+  const teamList = computed(() => Object.values(teams.value))
+  const displayTeams = computed(() => isAuthenticated.value && !noTeam.value ? teamList.value : [])
+  const alertMessage = computed(() =>
+    !isAuthenticated.value
+      ? 'You need to log in to create and view your teams.'
+      : "You haven't created any teams yet."
+  )
+
+  async function loadTeams() {
+    if (!isAuthenticated.value || !user.value?.id) { return }
+
+    try {
+      const res = await PokeAPI.getTeam(user.value.id)
+        const detailedTeams = {}
+        for (const team of res.data) {
+          let likes = []
+          try {
+            const likesRes = await PokeAPI.getTeamLikes(team.id)
+            likes = likesRes.data.like_count
+          } catch (e) {
+            console.error(`Failed to get likes for team ${team.id}`, e)
+          }
+            detailedTeams[team.id] = {
+            ...team,
+            likes,
+          }
+        }
+        teams.value = detailedTeams
+    } catch (err) {
+      console.error('Failed to load teams or likes:', err)
+    }
+  }
+
+  watch([isAuthenticated, user], ([auth, usr]) => {
+    if (auth && usr?.id) {
+      loadTeams()
+    }
+  })
+
+  onMounted(() => { loadTeams() })
 </script>

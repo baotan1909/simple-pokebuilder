@@ -2,8 +2,19 @@ import API from './API.js'
 
 export default {
   // Teams
+  getTeams() {
+    return API().get('teams.php')
+  },
+  getTeam(user_id) {
+    return API().get(`teams.php?id=${user_id}`)
+  },
   createTeam(payload) {
     return API().post('teams.php', payload)
+  },
+
+  // Likes
+  getTeamLikes(team_id) {
+    return API().get('team_likes.php', { params: { team_id } })
   },
 
   // PokeAPI

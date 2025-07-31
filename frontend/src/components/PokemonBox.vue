@@ -17,7 +17,7 @@
       <v-row align="center" class="mt-1">
         <v-col cols="auto" class="d-flex align-center">
           <v-icon icon="mdi-heart" color="red" start />
-          <span class="ml-1 font-weight-medium">{{ team.likes_count }} Likes</span>
+          <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
         </v-col>
       </v-row>
     </v-card>
@@ -46,7 +46,6 @@
         sprite: res.data.sprites.other['official-artwork'].front_default,
       })
     } catch (err) {
-      console.error('Failed to fetch Pokémon:', p.dex_number)
       result.push({
         name: 'Unknown',
         sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
