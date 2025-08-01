@@ -7,7 +7,7 @@
 
     <v-row>
       <v-col v-for="team in displayTeams" :key="team.id" cols="12" md="6">
-        <PokemonBox :team="team">
+        <PokeBox :team="team">
           <template #actions>
             <div class="d-flex align-center">
               <EditButton @click="openEditWindow(team)"/>
@@ -19,7 +19,7 @@
             <v-icon icon="mdi-heart" color="red" start />
             <span class="ml-1 font-weight-medium">{{ team.likes }} Likes</span>
           </template>
-        </PokemonBox>
+        </PokeBox>
       </v-col>
     </v-row>
     <EditTeamWindow v-model="showDialog" :team="teamToEdit" @edited="loadTeams" />
@@ -30,7 +30,7 @@
   import { ref, computed, onMounted, watch, defineExpose } from 'vue'
   import auth from '../composables/auth.js'
   import PokeAPI from '../services/PokeAPI.js'
-  import PokemonBox from '../components/PokemonBox.vue'
+  import PokeBox from '../components/PokeBox.vue'
   import EditButton from './EditButton.vue'
   import DeleteButton from './DeleteButton.vue'
   import EditTeamWindow from './EditTeamWindow.vue'

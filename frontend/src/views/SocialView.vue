@@ -2,7 +2,7 @@
   <v-container class="pa-4">    
     <v-row>
       <v-col v-for="team in teams" :key="team.id" cols="12" md="6">
-        <PokemonBox :team="team">
+        <PokeBox :team="team">
           <template #actions>
               <div class="d-flex align-center ga-1">
               <v-btn icon color="red" @click="likeTeam(team)">
@@ -17,7 +17,7 @@
           <template #info>
             <span class="text-caption"><strong>Author:</strong> {{ displayAuthor(team) }}</span>
           </template>
-        </PokemonBox>
+        </PokeBox>
       </v-col>
     </v-row>
   </v-container>
@@ -28,7 +28,7 @@
   import api from '../services/PokeAPI.js'
   import auth from '../composables/auth.js'
   import { useNotify } from '../composables/useNotify.js'
-  import PokemonBox from '../components/PokemonBox.vue'
+  import PokeBox from '../components/PokeBox.vue'
 
   const teams = ref([])
   const likedTeams = ref(new Set())
