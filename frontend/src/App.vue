@@ -40,7 +40,7 @@
           </v-col>
 
           <v-col cols="12" md="4" class="text-md-right text-center">
-            <v-btn icon href="https://github.com" target="_blank" rel="noopener">
+            <v-btn icon href="https://github.com/baotan1909/simple-pokebuilder" target="_blank" rel="noopener">
               <v-icon>mdi-github</v-icon>
             </v-btn>
             <span class="ml-2 text-body-2">Check it out on GitHub</span>
