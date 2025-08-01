@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-app-bar app color="indigo" dark flat>
-      <v-app-bar-title>Simple Pokémon TeamBuilder</v-app-bar-title>
+      <v-app-bar-title>
+        <router-link to="/" class="d-flex align-center ga-2 text-white text-decoration-none">
+          <img src="/icon.png" alt="Pokemon icon created by Darius Dan - Flaticon" width="32" height="32" style="object-fit: cover"/>
+          <span>Simple Pokémon TeamBuilder</span>
+        </router-link>
+      </v-app-bar-title>
       <v-spacer />
       <v-btn to="/" exact exact-active-class="v-btn--active" text>Home</v-btn>
       <v-btn to="/teambuilder" exact exact-active-class="v-btn--active" text>Team Builder</v-btn>
@@ -17,12 +22,25 @@
 
     <v-footer app color="indigo-darken-4" class="text-white">
       <v-container fluid class="px-4 py-2">
-        <v-row justify="space-between" align="center">
-          <v-col cols="12" md="6" class="text-body-2 mb-1 mb-md-0">
-            Made by baotan1909
+        <v-row align="center">
+          <v-col cols="12" md="4" class="text-body-2 mb-1 mb-md-0 text-md-left text-center">
+            <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons"
+            class="text-white text-decoration-none d-inline-flex align-center ga-2"
+            target="_blank" rel="noopener">
+              <img src="/icon.png" alt="Pokemon icon created by Darius Dan - Flaticon" width="32" height="32" style="object-fit: cover">
+              <span>Icon by Darius Dan - Flaticon</span>
+            </a>
           </v-col>
-          <v-col cols="12" md="6" class="text-md-right">
-            <v-btn icon href="https://github.com/baotan1909/simple-pokebuilder" target="_blank" rel="noopener">
+
+          <v-col cols="12" md="4" class="text-center mb-2 mb-md-0">
+            <div class="text-h6 font-weight-bold mb-1">Made by Thái Dương Bảo Tân</div>
+            <div class="text-body-2" style="opacity: 0.8;">
+              ©1995–2025 Pokémon characters and names are copyright © The Pokémon Company and/or Nintendo.
+            </div>
+          </v-col>
+
+          <v-col cols="12" md="4" class="text-md-right text-center">
+            <v-btn icon href="https://github.com" target="_blank" rel="noopener">
               <v-icon>mdi-github</v-icon>
             </v-btn>
             <span class="ml-2 text-body-2">Check it out on GitHub</span>
