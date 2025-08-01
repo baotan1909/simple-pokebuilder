@@ -25,7 +25,10 @@ export default {
   createLike(user_id, team_id) {
     return API().post('team_likes.php', {user_id, team_id})
   },
-
+  deleteLike(user_id, team_id) {
+    return API().delete('team_likes.php', { data: { user_id, team_id }})
+  },
+  
   // PokeAPI
   getAllPokemon() {
     return API().get('pokemon.php')

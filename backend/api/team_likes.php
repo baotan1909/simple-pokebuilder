@@ -83,6 +83,16 @@ switch ($method) {
             break;        
 
     case 'DELETE':
+        $data = getJSON();
+        if (!isset($data['user_id'], $data['team_id'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing user_id or team_id']);
+            break;
+        }
+
+        $stmt = $pdo->prepare("DELETE FROM team_likes WHERE user_id = ? AND team_id = ?");
+        $stmt->execute([$data['user_id'], $data['team_id']]);
+        echo json_encode(['success' => true]);
         break;
 
     default:
