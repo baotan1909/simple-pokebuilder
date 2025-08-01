@@ -1,22 +1,25 @@
 <template>
-    <v-container class="py-12">
+    <section class="py-12 px-4 px-md-12 bg-blue-lighten-4">
         <v-row justify="center">
             <v-col cols="12" md="8">
-            <h2 class="text-h4 font-weight-bold text-center mb-6">Contact Me</h2>
-            <v-form @submit.prevent="onSubmit">
-                <v-text-field label="Name" v-model="nameField" :error-messages="nameErrors" outlined class="mb-4"/>
-                <v-text-field label="Email" v-model="emailField" :error-messages="emailErrors" type="email" outlined class="mb-4"/>
-                <v-text-field label="Subject" v-model="subjectField" :error-messages="subjectErrors" outlined class="mb-4"/>
-                <v-textarea label="Message" v-model="messageField" :error-messages="messageErrors" outlined rows="4" class="mb-6"/>
-                <v-row justify="center">
-                    <v-btn color="primary" type="submit" class="px-8 text-h6 rounded-xl" style="min-height: 56px; min-width: 200px;">
-                    Send Message
-                    </v-btn>
-                </v-row>
-            </v-form>
+                <h2 class="text-h3 font-weight-bold text-center mb-6">Contact Me</h2>
+                <v-form @submit.prevent="onSubmit">
+                    <v-text-field label="Name" v-model="nameField" :error-messages="nameErrors" variant="solo-filled" color="white" class="mb-4"/>
+                    <v-text-field label="Email" v-model="emailField" :error-messages="emailErrors" type="email"
+                                variant="solo-filled" color="white" class="mb-4"/>
+                    <v-text-field label="Subject" v-model="subjectField" :error-messages="subjectErrors"
+                                variant="solo-filled" color="white" class="mb-4"/>
+                    <v-textarea label="Message" v-model="messageField" :error-messages="messageErrors"
+                                variant="solo-filled" color="white" rows="4" class="mb-6"/>
+                    <v-row justify="center">
+                        <v-btn color="primary" type="submit" class="px-8 text-h6 rounded-xl" style="min-height: 56px; min-width: 200px;">
+                        Send Message
+                        </v-btn>
+                    </v-row>
+                </v-form>
             </v-col>
         </v-row>
-    </v-container>
+    </section>
 </template>
   
 <script setup>
