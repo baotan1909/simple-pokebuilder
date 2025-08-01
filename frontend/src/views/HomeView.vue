@@ -9,17 +9,40 @@
     </v-sheet>
 
     <!-- About Section -->
-    <v-container class="py-12">
-        <v-row justify="center">
+    <section class="py-12 px-4 px-md-12">
+        <v-row justify="center" class="mb-4">
             <v-col cols="12" md="8" class="text-center">
-            <h2 class="text-h4 font-weight-bold mb-4">About This App</h2>
+                <h2 class="text-h4 font-weight-bold mb-2">About This App</h2>
                 <p class="text-subtitle-1">
-                Simple Pokémon TeamBuilder helps trainers of all levels easily create, manage, and share their Pokémon teams.
-                Whether you're preparing for competitive battles or just organizing your favorites, this tool is for you.
+                    A simple and intuitive tool designed for Pokémon fans who want to build and share their favorite teams.
                 </p>
             </v-col>
         </v-row>
-    </v-container>
+
+        <v-row justify="center" align="stretch">
+            <v-col cols="12" md="4" class="mb-4">
+                <FeatureCard title="Build Teams Easily">
+                    Select your favorite Pokémon and organize them into teams with just a few clicks.
+                    The simple interface is designed for beginners and casual fans.
+                    Move and item customization isn't available yet.
+                </FeatureCard>
+            </v-col>
+
+            <v-col cols="12" md="4" class="mb-4">
+                <FeatureCard title="Powered by PokeAPI">
+                    Get real-time access to official Pokémon data including index, types, and sprites — all powered by the open PokeAPI.
+                    This ensures accurate information for each Pokémon while keeping the app lightweight and always up-to-date.
+                </FeatureCard>
+            </v-col>
+
+            <v-col cols="12" md="4" class="mb-4">
+                <FeatureCard title="Current State">
+                    Currently, the app supports only Generation 1 Pokémon, offering a focused and nostalgic experience for fans of the originals.
+                    Support for more generations may be added in future updates.
+                </FeatureCard>
+            </v-col>
+        </v-row>
+    </section>
 
     <!-- Teambuilder Section -->
     <FeatureSection background="bg-blue-lighten-4">
@@ -28,7 +51,7 @@
         </template>
         <h3 class="text-h5 font-weight-bold mb-2">Build Your Dream Team</h3>
         <p class="text-subtitle-1 mb-4">
-            Use the intuitive team builder to select your favorite Pokémon, customize their moves, assign roles, and fine-tune strategies
+            Use the intuitive team builder to select your favorite Pokemon, customize their moves, assign roles, and fine-tune strategies
             for any battle scenario. Whether you're preparing for competitive play or crafting your dream lineup just for fun, our clean and
             simple interface makes the entire process fast, flexible, and enjoyable.
         </p>
@@ -59,6 +82,7 @@
     import auth from '../composables/auth.js'
     import FeatureSection from '../components/FeatureSection.vue'    
     import ContactForm from '../components/ContactForm.vue'
+import FeatureCard from '../components/FeatureCard.vue'
 
     const router = useRouter()
     const { isAuthenticated, user, checkAuth } = auth
