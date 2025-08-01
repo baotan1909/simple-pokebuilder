@@ -5,7 +5,7 @@
         <v-card class="pa-6" elevation="12" rounded="xl">
           <v-card-title class="text-center pb-0">
             <v-icon icon="mdi-pokeball" size="48" color="red-darken-1" />
-            <div class="mt-2 text-h5 font-weight-bold">Welcome to PokeTeam</div>
+            <div class="mt-2 text-h5 font-weight-bold">Welcome to SPT</div>
             <div class="text-medium-emphasis text-subtitle-2">
               Build, save, and share your Pokémon teams!
             </div>
