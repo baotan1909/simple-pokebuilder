@@ -44,6 +44,42 @@ switch ($method) {
         break;
 
         case 'POST':
+            $data = getJSON();
+            if (!isset($data['user_id'], $data['team_id'])) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Missing user_id or team_id']);
+                break;
+            }
+        
+            $stmt = $pdo->prepare("SELECT user_id FROM teams WHERE id = ?");
+            $stmt->execute([$data['team_id']]);
+            $owner = $stmt->fetchColumn();
+        
+            if ($owner === false) {
+                http_response_code(404);
+                echo json_encode(['error' => 'Team not found']);
+                break;
+            }
+        
+            if ((int)$owner === (int)$data['user_id']) {
+                http_response_code(403);
+                echo json_encode(['error' => 'You cannot like your own team']);
+                break;
+            }
+        
+            try {
+                $stmt = $pdo->prepare("INSERT INTO team_likes (user_id, team_id) VALUES (?, ?)");
+                $stmt->execute([$data['user_id'], $data['team_id']]);
+                echo json_encode(['success' => true]);
+            } catch (PDOException $e) {
+                if (str_contains($e->getMessage(), 'UNIQUE')) {
+                    http_response_code(409);
+                    echo json_encode(['error' => 'User already liked this team']);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Failed to like team', 'details' => $e->getMessage()]);
+                }
+            }
             break;        
 
     case 'DELETE':

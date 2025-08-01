@@ -59,10 +59,14 @@ switch ($method) {
             return;
         }
         // If no user_id is provided, fetch all teams
-        $stmt = $pdo->query("SELECT * FROM teams ORDER BY created_at DESC");
+        $stmt = $pdo->query("SELECT  teams.*, users.name AS user_name
+                            FROM teams
+                            JOIN users ON teams.user_id = users.id
+                            ORDER BY teams.id ASC");
+
         $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Fetch all Pokemons and attach them to the coressponding team
+        // Fetch all Pokemons and attach them to the corresponding team
         $pokeStmt = $pdo->query("SELECT * FROM pokemons");
         $allPokemons = $pokeStmt->fetchAll(PDO::FETCH_ASSOC);
 

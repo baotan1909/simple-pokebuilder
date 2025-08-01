@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TeamBuilderView from '../views/TeamBuilderView.vue'
+import SocialView from '../views/SocialView.vue'
 import DexView from '../views/DexView.vue'
 import LoginView from '../views/LoginView.vue'
 
@@ -14,6 +15,11 @@ const routes = [
         path: '/teambuilder',
         name: 'teambuilder',
         component: TeamBuilderView
+    },
+    {
+        path: '/social',
+        name: 'social',
+        component: SocialView
     },
     {
         path: '/dex',

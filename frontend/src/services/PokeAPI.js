@@ -22,6 +22,9 @@ export default {
   getTeamLikes(team_id) {
     return API().get('team_likes.php', { params: { team_id } })
   },
+  createLike(user_id, team_id) {
+    return API().post('team_likes.php', {user_id, team_id})
+  },
 
   // PokeAPI
   getAllPokemon() {
