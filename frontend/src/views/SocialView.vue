@@ -1,24 +1,26 @@
 <template> 
-  <v-row>
-    <v-col v-for="team in teams" :key="team.id" cols="12" md="6">
-      <PokemonBox :team="team">
-        <template #actions>
-            <div class="d-flex align-center ga-1">
-            <v-btn icon color="red" @click="likeTeam(team)">
-              <v-icon>
-                {{ likedTeams.has(team.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
-              </v-icon>
-            </v-btn>
-            <span class="text-caption text-grey-darken-1">{{ likeCounts[team.id] ?? 0 }}</span>
-          </div>
-        </template>
-
-        <template #info>
-          <span class="text-caption"><strong>Author:</strong> {{ displayAuthor(team) }}</span>
-        </template>
-      </PokemonBox>
-    </v-col>
-  </v-row>
+  <v-container class="pa-4">    
+    <v-row>
+      <v-col v-for="team in teams" :key="team.id" cols="12" md="6">
+        <PokemonBox :team="team">
+          <template #actions>
+              <div class="d-flex align-center ga-1">
+              <v-btn icon color="red" @click="likeTeam(team)">
+                <v-icon>
+                  {{ likedTeams.has(team.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
+                </v-icon>
+              </v-btn>
+              <span class="text-caption text-grey-darken-1">{{ likeCounts[team.id] ?? 0 }}</span>
+            </div>
+          </template>
+  
+          <template #info>
+            <span class="text-caption"><strong>Author:</strong> {{ displayAuthor(team) }}</span>
+          </template>
+        </PokemonBox>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>

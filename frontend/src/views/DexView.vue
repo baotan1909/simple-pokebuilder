@@ -1,5 +1,7 @@
 <template>
+  <v-container class="pa-4">
     <PokeList/>
+  </v-container>
 </template>
   
 <script setup>
