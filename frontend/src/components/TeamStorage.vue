@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted, watch, defineExpose } from 'vue'
+  import { ref, computed, onMounted, watch } from 'vue'
   import auth from '../composables/auth.js'
   import PokeAPI from '../services/PokeAPI.js'
   import PokeBox from '../components/PokeBox.vue'
