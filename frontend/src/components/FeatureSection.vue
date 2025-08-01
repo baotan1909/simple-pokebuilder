@@ -1,18 +1,24 @@
 <template>
-    <v-container class="py-12">
-        <v-row align="center" :class="{ 'flex-md-row-reverse': reverse }">
-            <v-col cols="12" md="6">
-                <slot name="image" />
+    <section :class="['py-12', background]">
+        <v-row align="center" no-gutters :class="{ 'flex-md-row-reverse': reverse }">
+            <v-col cols="12" md="6" class="d-flex justify-center px-4 px-md-12">
+                <div class="w-100" style="max-width: 1280px;">
+                    <slot name="image" />
+                </div>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="6" class="px-4 px-md-12">
                 <slot />
             </v-col>
         </v-row>
-    </v-container>
+    </section>
 </template>
 
 <script setup>
-    defineProps({
-        reverse: Boolean,
-    })
+defineProps({
+  reverse: Boolean,
+  background: {
+    type: String,
+    default: '',
+  }
+})
 </script>

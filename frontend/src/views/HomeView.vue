@@ -22,13 +22,15 @@
     </v-container>
 
     <!-- Teambuilder Section -->
-    <FeatureSection>
+    <FeatureSection background="bg-blue-lighten-4">
         <template #image>
-            <v-img :src="vueLogo" alt="Team Preview" height="300" cover />
+            <v-img src="/img/teambuilder_screenshot.png" alt="Teambuilder preview" cover />
         </template>
         <h3 class="text-h5 font-weight-bold mb-2">Build Your Dream Team</h3>
         <p class="text-subtitle-1 mb-4">
-            Use our intuitive builder to select Pokémon, customize moves, and plan strategies. All from a simple interface.
+            Use the intuitive team builder to select your favorite Pokémon, customize their moves, assign roles, and fine-tune strategies
+            for any battle scenario. Whether you're preparing for competitive play or crafting your dream lineup just for fun, our clean and
+            simple interface makes the entire process fast, flexible, and enjoyable.
         </p>
         <v-btn color="primary" @click="router.push('/teambuilder')">Try the Builder</v-btn>
     </FeatureSection>
@@ -36,11 +38,13 @@
     <!-- All teams section -->
     <FeatureSection reverse>
         <template #image>
-            <v-img :src="vueLogo" alt="Community" height="300" cover />
+            <v-img src="/img/allTeams_screenshot.png" alt="All teams preview" cover />
         </template>
         <h3 class="text-h5 font-weight-bold mb-2">See Other Trainers’ Teams</h3>
         <p class="text-subtitle-1 mb-4">
-            Browse community-submitted teams for inspiration or fun. Like your favorites and share your own!
+            Browse a growing collection of community-submitted teams to find inspiration, discover creative teams, or simply explore what
+            other trainers are building. Like your favorites, and contribute your own team to become part of the conversation.
+            Whether you're a casual fan or a seasoned battler, there's something for everyone to enjoy.
         </p>
         <v-btn color="primary" @click="router.push('/social')">Browse Teams</v-btn>
     </FeatureSection>
@@ -53,7 +57,6 @@
     import { computed, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
     import auth from '../composables/auth.js'
-    import vueLogo from '../assets/vue.svg'
     import FeatureSection from '../components/FeatureSection.vue'    
     import ContactForm from '../components/ContactForm.vue'
 
