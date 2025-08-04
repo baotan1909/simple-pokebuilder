@@ -5,21 +5,21 @@
                 <h2 id="contact-heading" class="text-h3 font-weight-bold text-center mb-6">Contact Me</h2>
                 <v-form @submit.prevent="onSubmit">
                     <v-text-field label="Name" variant="solo-filled" color="white" class="mb-4" v-model="nameField"
-                                :aria-invalid="nameErrors.length > 0"
-                                :aria-describedby="nameErrors.length ? 'name-error' : null"
+                                :aria-invalid="!!nameErrors"
+                                :aria-describedby="nameErrors ? 'name-error' : null"
                                 :error-messages="nameErrors"/>
                     <v-text-field label="Email"  type="email" variant="solo-filled" color="white" class="mb-4" v-model="emailField"
                                 :error-messages="emailErrors"
-                                :aria-invalid="emailErrors.length > 0"
-                                :aria-describedby="emailErrors.length ? 'email-error' : null"/>
+                                :aria-invalid="!!emailErrors"
+                                :aria-describedby="emailErrors ? 'email-error' : null"/>
                     <v-text-field label="Subject" variant="solo-filled" color="white" class="mb-4" v-model="subjectField"
                                 :error-messages="subjectErrors"
-                                :aria-invalid="subjectErrors.length > 0"
-                                :aria-describedby="subjectErrors.length ? 'subject-error' : null"/>
+                                :aria-invalid="!!subjectErrors"
+                                :aria-describedby="subjectErrors ? 'subject-error' : null"/>
                     <v-textarea label="Message" variant="solo-filled" color="white" rows="4" class="mb-6" v-model="messageField"
                                 :error-messages="messageErrors"
-                                :aria-invalid="messageErrors.length > 0"
-                                :aria-describedby="messageErrors.length ? 'message-error' : null"/>
+                                :aria-invalid="!!messageErrors"
+                                :aria-describedby="messageErrors ? 'message-error' : null"/>
                     <v-row justify="center">
                         <v-btn color="primary" type="submit" class="px-8 text-h6 rounded-xl" style="min-height: 56px; min-width: 200px;"
                                 aria-label="Send your message">
