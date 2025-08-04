@@ -25,7 +25,9 @@ if (!isset($_GET['name'])) {
 $name = strtolower(trim($_GET['name']));
 $cacheFile = "$cacheDir/pokemon_$name.json";
 
-@mkdir($cacheDir);
+if (!is_dir($cacheDir)) {
+    mkdir($cacheDir, 0755, true);
+}
 
 if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheDuration)) {
     echo file_get_contents($cacheFile);
@@ -41,5 +43,34 @@ if ($response === FALSE) {
     exit;
 }
 
-file_put_contents($cacheFile, $response);
-echo $response;
+$data = json_decode($response, true);
+if (!is_array($data)) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Failed to parse API response']);
+    exit;
+}
+
+$officialArtwork = array_map(
+    fn($sprites) => $sprites['other']['official-artwork']['front_default'] ?? null,
+    [$data['sprites'] ?? []]
+)[0];
+
+$officialArtwork = array_map(
+    fn($sprites) => $sprites['other']['official-artwork'] ?? [],
+    [$data['sprites'] ?? []]
+)[0];
+
+$filtered = [
+    'id' => $data['id'] ?? null,
+    'name' => $data['name'] ?? null,
+    'types' => $data['types'] ?? [],
+    'past_types' => $data['past_types'] ?? [],
+    'sprites' => [
+        'other' => [
+            'official-artwork' => $officialArtwork
+        ]
+    ],
+];
+
+file_put_contents($cacheFile, json_encode($filtered));
+echo json_encode($filtered);
