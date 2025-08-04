@@ -1,20 +1,61 @@
 <template>
   <v-app>
     <v-app-bar app color="indigo" dark flat>
-      <v-app-bar-title>
-        <router-link to="/" class="d-flex align-center ga-2 text-white text-decoration-none">
-          <img src="/icon.png" alt="Pokemon icon created by Darius Dan - Flaticon" width="32" height="32" style="object-fit: cover"/>
-          <span>Simple Pokémon TeamBuilder</span>
-        </router-link>
-      </v-app-bar-title>
-      <v-spacer />
+    <v-app-bar-nav-icon @click="openDrawer" class="d-md-none" />
+    <v-app-bar-title>
+      <router-link to="/" class="d-flex align-center ga-2 text-white text-decoration-none">
+        <img src="/icon.png" alt="Pokemon icon" width="32" height="32" style="object-fit: cover" />
+        <span>Simple Pokémon TeamBuilder</span>
+      </router-link>
+    </v-app-bar-title>
+
+    <v-spacer class="d-none d-md-flex" />
+    <div class="d-none d-md-flex">
       <v-btn to="/" exact exact-active-class="v-btn--active" text>Home</v-btn>
       <v-btn to="/teambuilder" exact exact-active-class="v-btn--active" text>Team Builder</v-btn>
       <v-btn to="/social" exact exact-active-class="v-btn--active" text>All Teams</v-btn>
       <v-btn to="/dex" exact exact-active-class="v-btn--active" text>Pokedex</v-btn>
       <v-btn v-if="!isAuthenticated" to="/login" exact exact-active-class="v-btn--active" text>Login</v-btn>
       <v-btn v-else text @click="handleLogout">Logout</v-btn>
-    </v-app-bar>
+    </div>
+  </v-app-bar>
+
+  <v-navigation-drawer v-model="drawer" temporary left class="d-md-none">
+    <v-sheet class="pa-4 d-flex justify-space-between align-center">
+      <div class="text-h6">Menu</div>
+      <v-btn icon @click="closeDrawer">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-sheet>
+
+    <v-divider />
+    <v-list nav dense>
+      <v-list-item link to="/" @click="closeDrawer">
+        <v-list-item-icon><v-icon>mdi-home</v-icon></v-list-item-icon>
+        <v-list-item-title>Home</v-list-item-title>
+      </v-list-item>
+      <v-list-item link to="/teambuilder" @click="closeDrawer">
+        <v-list-item-icon><v-icon>mdi-pokeball</v-icon></v-list-item-icon>
+        <v-list-item-title>Team Builder</v-list-item-title>
+      </v-list-item>
+      <v-list-item link to="/social" @click="closeDrawer">
+        <v-list-item-icon><v-icon>mdi-account-group</v-icon></v-list-item-icon>
+        <v-list-item-title>All Teams</v-list-item-title>
+      </v-list-item>
+      <v-list-item link to="/dex" @click="closeDrawer">
+        <v-list-item-icon><v-icon>mdi-book-open-page-variant</v-icon></v-list-item-icon>
+        <v-list-item-title>Pokedex</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-if="!isAuthenticated" link to="/login" @click="closeDrawer">
+        <v-list-item-icon><v-icon>mdi-login</v-icon></v-list-item-icon>
+        <v-list-item-title>Login</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-else @click="() => { handleLogout(); closeDrawer() }">
+        <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
+        <v-list-item-title>Logout</v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 
     <v-main>
       <router-view />
@@ -52,6 +93,14 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue'
   import auth from './composables/auth.js'
   const { isAuthenticated, handleLogout } = auth
+  const drawer = ref(false)
+  function openDrawer() {
+    drawer.value = true
+  }
+  function closeDrawer() {
+    drawer.value = false
+  }
 </script>
