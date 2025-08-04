@@ -20,7 +20,7 @@
       <router-view />
     </v-main>
 
-    <v-footer app color="indigo-darken-4" class="text-white">
+    <v-footer color="indigo-darken-4" class="text-white">
       <v-container fluid class="px-4 py-2">
         <v-row align="center">
           <v-col cols="12" md="4" class="text-body-2 mb-1 mb-md-0 text-md-left text-center">
