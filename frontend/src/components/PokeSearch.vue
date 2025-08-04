@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete :items="items" item-title="name" item-value="id" label="Select Pokémon"
+  <v-autocomplete   class="w-100" :items="items" item-title="name" item-value="id" label="Select Pokémon"
   aria-label="Pokemon selector" aria-describedby="pokemon-autocomplete-desc" clearable 
   :model-value="modelValue" @update:modelValue="$emit('update:modelValue', $event)"/>
   <span :id="ariaDescriptionId" class="sr-only">

@@ -6,7 +6,7 @@
                     <slot name="image" />
                 </div>
             </v-col>
-            <v-col cols="12" md="6" class="px-4 px-md-12">
+            <v-col cols="12" md="6" class="d-flex flex-column align-center align-md-start text-center text-md-start px-4 px-md-12">
                 <slot />
             </v-col>
         </v-row>
