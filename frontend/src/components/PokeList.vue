@@ -1,20 +1,20 @@
 <template>
   <v-progress-circular v-if="loading" indeterminate color="primary" size="64" class="d-flex mx-auto my-4"/>
   
-  <v-table v-else class="elevation-2 rounded my-4 bordered-table" density="comfortable" hover>
-    <thead>
-      <tr class="bg-blue-grey-lighten-4">
-        <th v-for="h in headers" :key="h" class="text-uppercase font-weight-bold text-center">
+  <v-table v-else class="elevation-2 rounded my-4 bordered-table" density="comfortable" hover aria-label="Pokedex table">
+    <thead role="rowgroup">
+      <tr class="bg-blue-grey-lighten-4" role="row">
+        <th v-for="h in headers" :key="h" class="text-uppercase font-weight-bold text-center" role="columnheader" scope="col">
           {{ h }}
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr v-for="(p) in pokemons" :key="p.id">
-          <td class="text-center">{{ p.id }}</td>
-          <td class="text-center"><img :src="p.sprite" alt="sprite" width="128"/></td>
-          <td class="text-center text-capitalize font-weight-medium" :class="{'text-error': p.error}">{{ p.name }}</td>
-          <td class="text-center">
+    <tbody role="rowgroup">
+      <tr v-for="(p) in pokemons" :key="p.id" role="row">
+          <td class="text-center" role="cell">{{ p.id }}</td>
+          <td class="text-center" role="cell"><img :src="p.sprite" :alt="`Sprite of ${p.name}`" width="128"/></td>
+          <td class="text-center text-capitalize font-weight-medium" :class="{'text-error': p.error}" role="cell">{{ p.name }}</td>
+          <td class="text-center" role="cell">
             <TypeBadge :types="p.types"/>
         </td>
       </tr>
