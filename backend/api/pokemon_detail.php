@@ -6,9 +6,9 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-$origin = $_ENV['FRONTEND_ORIGIN'];
+$frontend = $_ENV['FRONTEND_URL'];
 
-header("Access-Control-Allow-Origin: $origin");
+header("Access-Control-Allow-Origin: $frontend");
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
