@@ -35,9 +35,7 @@
 ############################
 /backend/vendor/
 /backend/.env
-/backend/.env.*
 /backend/*.log
 /backend/.DS_Store
 /backend/storage/
-/backend/db/*.sql
 /backend/db/*.db
